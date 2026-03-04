@@ -1453,16 +1453,16 @@ h4 {
     overflow: hidden;
     pointer-events: none;
     -webkit-mask-image: linear-gradient(to right,
-      transparent  calc(50% - 125px),
-      black        calc(50% - 110px),
-      black        calc(50% + 110px),
-      transparent  calc(50% + 125px)
+      transparent  calc(50% - 105px),
+      black        calc(50% - 90px),
+      black        calc(50% + 90px),
+      transparent  calc(50% + 105px)
     );
     mask-image: linear-gradient(to right,
-      transparent  calc(50% - 125px),
-      black        calc(50% - 110px),
-      black        calc(50% + 110px),
-      transparent  calc(50% + 125px)
+      transparent  calc(50% - 105px),
+      black        calc(50% - 90px),
+      black        calc(50% + 90px),
+      transparent  calc(50% + 105px)
     );
   }
 

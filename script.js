@@ -59,14 +59,18 @@
   var heroCta = document.getElementById("hero-cta");
   var stickyCta = document.getElementById("sticky-cta");
   if (heroCta && stickyCta) {
+    var stickyDebounceTimer = null;
     var observer = new IntersectionObserver(
       function (entries) {
         var e = entries[0];
         if (!e) return;
         var showSticky = !e.isIntersecting;
-        stickyCta.classList.toggle("is-visible", showSticky);
-        stickyCta.setAttribute("aria-hidden", String(!showSticky));
-        document.body.classList.toggle("sticky-cta-visible", showSticky);
+        clearTimeout(stickyDebounceTimer);
+        stickyDebounceTimer = setTimeout(function () {
+          stickyCta.classList.toggle("is-visible", showSticky);
+          stickyCta.setAttribute("aria-hidden", String(!showSticky));
+          document.body.classList.toggle("sticky-cta-visible", showSticky);
+        }, 80);
       },
       { root: null, rootMargin: "-72px 0px 0px 0px", threshold: 0 }
     );
