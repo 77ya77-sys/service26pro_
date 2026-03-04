@@ -76,56 +76,43 @@
   var reviewsTrack = document.querySelector(".reviews-track");
   var reviewsPrev = document.querySelector(".reviews-prev");
   var reviewsNext = document.querySelector(".reviews-next");
+
   if (reviewsTrack && reviewsPrev && reviewsNext) {
     var cards = Array.from(reviewsTrack.querySelectorAll(".review-card"));
-    var count = cards.length;
-    if (count > 0) {
-      var gap = 24;
-      cards.forEach(function (card) {
-        var clone = card.cloneNode(true);
-        clone.setAttribute("aria-hidden", "true");
-        reviewsTrack.appendChild(clone);
-      });
-      var setWidth = 0;
-      for (var i = 0; i < count; i++) setWidth += cards[i].offsetWidth + gap;
-      setWidth -= gap;
-      var jumping = false;
-      function clampScroll() {
-        if (jumping) return;
-        var left = reviewsTrack.scrollLeft;
-        if (left >= setWidth - 1) {
-          jumping = true;
-          reviewsTrack.scrollLeft = left - setWidth;
-          requestAnimationFrame(function () { jumping = false; });
-        }
+    if (cards.length > 0) {
+      function updateButtons() {
+        var scrollLeft = reviewsTrack.scrollLeft;
+        var maxScrollLeft = reviewsTrack.scrollWidth - reviewsTrack.clientWidth;
+
+        // Disabled visually via opacity if at ends (optional, you can also use disabled attribute)
+        reviewsPrev.style.opacity = scrollLeft <= 0 ? "0.5" : "1";
+        reviewsPrev.style.pointerEvents = scrollLeft <= 0 ? "none" : "auto";
+
+        reviewsNext.style.opacity = scrollLeft >= maxScrollLeft - 1 ? "0.5" : "1";
+        reviewsNext.style.pointerEvents = scrollLeft >= maxScrollLeft - 1 ? "none" : "auto";
       }
-      reviewsTrack.addEventListener("scroll", clampScroll);
-      reviewsTrack.addEventListener("scrollend", clampScroll);
-      var lastTouchX = 0;
-      reviewsTrack.addEventListener("touchstart", function (e) {
-        lastTouchX = e.touches[0].clientX;
-      }, { passive: true });
-      reviewsTrack.addEventListener("touchmove", function (e) {
-        if (reviewsTrack.scrollLeft <= 0 && e.touches[0].clientX > lastTouchX) {
-          reviewsTrack.scrollLeft = setWidth;
-        }
-        lastTouchX = e.touches[0].clientX;
-      }, { passive: true });
-      reviewsTrack.addEventListener("wheel", function (e) {
-        if (e.deltaX > 0 && reviewsTrack.scrollLeft <= 0) {
-          reviewsTrack.scrollLeft = setWidth;
-        }
-      }, { passive: true });
-      var step = cards[0].offsetWidth + gap;
+
+      var gap = 24;
+      var getStep = function () {
+        return cards[0].offsetWidth + gap;
+      };
+
       reviewsPrev.addEventListener("click", function () {
-        if (reviewsTrack.scrollLeft <= 0) reviewsTrack.scrollLeft = setWidth;
-        reviewsTrack.scrollBy({ left: -step, behavior: "smooth" });
+        reviewsTrack.scrollBy({ left: -getStep(), behavior: "smooth" });
       });
+
       reviewsNext.addEventListener("click", function () {
-        reviewsTrack.scrollBy({ left: step, behavior: "smooth" });
+        reviewsTrack.scrollBy({ left: getStep(), behavior: "smooth" });
       });
+
+      reviewsTrack.addEventListener("scroll", updateButtons, { passive: true });
+      window.addEventListener("resize", updateButtons, { passive: true });
+
+      // Initial button state
+      updateButtons();
     }
   }
+
 
   document.querySelectorAll(".faq-question").forEach(function (btn) {
     btn.addEventListener("click", function () {
