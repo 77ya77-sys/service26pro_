@@ -1470,7 +1470,7 @@ h4 {
     position: relative;
   }
 
-  /* Плавное движение: анимация на композиторе; backface + целые пиксели снижают мерцание на стыке цикла на iOS */
+  /* Сдвиг задаётся JS через --marquee-offset (без перезапуска анимации → без мерцания на стыке цикла) */
   .brand-marquee-track {
     display: flex;
     flex-wrap: nowrap;
@@ -1478,12 +1478,7 @@ h4 {
     will-change: transform;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
-    animation: brand-marquee 28s linear infinite;
-  }
-
-  @keyframes brand-marquee {
-    0%   { transform: translateX(0); }
-    100% { transform: translateX(-1736px); }
+    transform: translateX(var(--marquee-offset, 0));
   }
 
   /*

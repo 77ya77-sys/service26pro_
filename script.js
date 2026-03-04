@@ -139,6 +139,30 @@
   }
 
 
+  (function initBrandMarquee() {
+    if (!window.matchMedia("(max-width: 640px)").matches) return;
+    var wrap = document.querySelector(".brand-logos-wrap");
+    var tracks = document.querySelectorAll(".brand-marquee-track");
+    if (!wrap || !tracks.length) return;
+
+    var SET_WIDTH = 14 * 96 + 13 * 28 + 28;
+    var DURATION_MS = 28000;
+    var pxPerMs = SET_WIDTH / DURATION_MS;
+    var offset = 0;
+    var lastT = null;
+
+    function tick(t) {
+      if (lastT === null) lastT = t;
+      var dt = Math.min(t - lastT, 50);
+      lastT = t;
+      offset -= pxPerMs * dt;
+      if (offset <= -SET_WIDTH) offset += SET_WIDTH;
+      wrap.style.setProperty("--marquee-offset", offset.toFixed(3) + "px");
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  })();
+
   document.querySelectorAll(".faq-question").forEach(function (btn) {
     btn.addEventListener("click", function () {
       var item = btn.closest(".faq-item");
