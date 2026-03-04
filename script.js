@@ -1,32 +1,6 @@
 (function () {
   "use strict";
 
-  function initCookieBanner() {
-    var COOKIE_ACCEPT_KEY = "service26pro_cookie_accepted";
-    var cookieBanner = document.getElementById("cookie-banner");
-    var cookieAccept = document.getElementById("cookie-banner-accept");
-    if (!cookieBanner || !cookieAccept) return;
-    if (localStorage.getItem(COOKIE_ACCEPT_KEY)) {
-      cookieBanner.classList.add("is-hidden");
-      return;
-    }
-    cookieBanner.style.display = "flex";
-    cookieBanner.classList.remove("is-hidden");
-    setTimeout(function () {
-      cookieBanner.classList.add("cookie-visible");
-    }, 80);
-    cookieAccept.addEventListener("click", function () {
-      localStorage.setItem(COOKIE_ACCEPT_KEY, "1");
-      cookieBanner.classList.remove("cookie-visible");
-      setTimeout(function () { cookieBanner.classList.add("is-hidden"); }, 400);
-    });
-  }
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initCookieBanner);
-  } else {
-    initCookieBanner();
-  }
-
   (function initStepsCarousel() {
     var stepsGrid = document.querySelector(".steps-grid");
     if (!stepsGrid) return;
