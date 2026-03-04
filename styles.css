@@ -435,13 +435,6 @@ h4 {
     display: flex;
     align-items: center;
     justify-content: center;
-    transform: translateY(100%);
-    opacity: 0;
-    visibility: hidden;
-    transition: transform 0.25s ease, opacity 0.25s ease, visibility 0.25s;
-  }
-
-  .sticky-cta.is-visible {
     transform: translateY(0);
     opacity: 1;
     visibility: visible;
@@ -505,7 +498,13 @@ h4 {
   border: 1px solid var(--c-border);
   display: grid;
   place-items: center;
-  font-size: 1.25rem;
+  color: var(--c-accent);
+}
+
+.problem-icon-svg {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
 }
 
 .problem-card h3 {
@@ -1267,6 +1266,15 @@ h4 {
   .hero-content {
     text-align: center;
     align-items: center;
+    gap: var(--s-24);
+  }
+
+  .hero h1 {
+    margin-bottom: 0;
+  }
+
+  .hero h1 small {
+    margin-top: var(--s-12);
   }
 
   .hero-regions {
@@ -1288,9 +1296,7 @@ h4 {
   }
 
   .btn-hero-cta {
-    width: 100%;
-    max-width: 100%;
-    padding: var(--s-16) var(--s-32);
+    display: none;
   }
 
   .section-header {
@@ -1431,15 +1437,18 @@ h4 {
     position: relative;
   }
 
-  /*
-    Оба трека (серый + цветной) используют одинаковую анимацию → идеальный sync.
-    Трек содержит 2 набора; translateX(-50%) = ровно один набор = бесшовный цикл.
-  */
+  /* Плавное движение без микрорывков: анимация на композиторе, фиксированный пиксель 1736 = один набор */
   .brand-marquee-track {
     display: flex;
     flex-wrap: nowrap;
     width: max-content;
     will-change: transform;
+    animation: brand-marquee 28s linear infinite;
+  }
+
+  @keyframes brand-marquee {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-1736px); }
   }
 
   /*

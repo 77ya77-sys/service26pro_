@@ -59,22 +59,43 @@
   var heroCta = document.getElementById("hero-cta");
   var stickyCta = document.getElementById("sticky-cta");
   if (heroCta && stickyCta) {
-    var stickyDebounceTimer = null;
-    var observer = new IntersectionObserver(
-      function (entries) {
-        var e = entries[0];
-        if (!e) return;
-        var showSticky = !e.isIntersecting;
-        clearTimeout(stickyDebounceTimer);
-        stickyDebounceTimer = setTimeout(function () {
-          stickyCta.classList.toggle("is-visible", showSticky);
-          stickyCta.setAttribute("aria-hidden", String(!showSticky));
-          document.body.classList.toggle("sticky-cta-visible", showSticky);
-        }, 80);
-      },
-      { root: null, rootMargin: "-72px 0px 0px 0px", threshold: 0 }
-    );
-    observer.observe(heroCta);
+    function initSticky() {
+      if (window.innerWidth <= 640) {
+        stickyCta.setAttribute("aria-hidden", "false");
+        document.body.classList.add("sticky-cta-visible");
+        return;
+      }
+      stickyCta.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("sticky-cta-visible");
+      var debounceTimer = null;
+      var observer = new IntersectionObserver(
+        function (entries) {
+          var e = entries[0];
+          if (!e) return;
+          var showSticky = !e.isIntersecting;
+          clearTimeout(debounceTimer);
+          debounceTimer = setTimeout(function () {
+            stickyCta.classList.toggle("is-visible", showSticky);
+            stickyCta.setAttribute("aria-hidden", String(!showSticky));
+            document.body.classList.toggle("sticky-cta-visible", showSticky);
+          }, 80);
+        },
+        { root: null, rootMargin: "-72px 0px 0px 0px", threshold: 0 }
+      );
+      observer.observe(heroCta);
+    }
+    if (window.innerWidth <= 640) {
+      stickyCta.setAttribute("aria-hidden", "false");
+      document.body.classList.add("sticky-cta-visible");
+    } else {
+      initSticky();
+    }
+    window.addEventListener("resize", function () {
+      if (window.innerWidth <= 640) {
+        stickyCta.setAttribute("aria-hidden", "false");
+        document.body.classList.add("sticky-cta-visible");
+      }
+    });
   }
 
   var reviewsTrack = document.querySelector(".reviews-track");
@@ -117,48 +138,6 @@
     }
   }
 
-
-  (function initBrandMarquee() {
-    if (!window.matchMedia("(max-width: 640px)").matches) return;
-
-    var grayTrack = document.querySelector(".brand-logos-wrap > .brand-marquee-track");
-    var colorTrack = document.querySelector(".brand-marquee-color .brand-marquee-track");
-    if (!grayTrack) return;
-
-    grayTrack.style.animation = "none";
-    if (colorTrack) colorTrack.style.animation = "none";
-
-    // Ширина одного набора = 14 ячеек по 96px + 13 зазоров по 28px + padding-right 28px. Константа, без измерения — без скачка при сбросе.
-    var SET_WIDTH = 14 * 96 + 13 * 28 + 28;
-
-    var started = false;
-
-    function start() {
-      if (started) return;
-      started = true;
-
-      var offset = 0;
-      var lastTime = null;
-      var pxPerMs = SET_WIDTH / 28000;
-
-      function tick(time) {
-        if (lastTime === null) lastTime = time;
-        var delta = Math.min(time - lastTime, 100);
-        lastTime = time;
-
-        offset += pxPerMs * delta;
-        if (offset >= SET_WIDTH) offset = 0;
-
-        grayTrack.style.transform = "translateX(" + (-offset) + "px)";
-        if (colorTrack) colorTrack.style.transform = "translateX(" + (-offset) + "px)";
-        requestAnimationFrame(tick);
-      }
-
-      requestAnimationFrame(tick);
-    }
-
-    start();
-  })();
 
   document.querySelectorAll(".faq-question").forEach(function (btn) {
     btn.addEventListener("click", function () {
