@@ -142,22 +142,22 @@
   (function initBrandMarquee() {
     if (!window.matchMedia("(max-width: 640px)").matches) return;
     var wrap = document.querySelector(".brand-logos-wrap");
-    var tracks = document.querySelectorAll(".brand-marquee-track");
-    if (!wrap || !tracks.length) return;
+    if (!wrap) return;
 
     var SET_WIDTH = 14 * 96 + 13 * 28 + 28;
     var DURATION_MS = 28000;
     var pxPerMs = SET_WIDTH / DURATION_MS;
+    var maxDt = 18;
     var offset = 0;
     var lastT = null;
 
     function tick(t) {
       if (lastT === null) lastT = t;
-      var dt = Math.min(t - lastT, 50);
+      var dt = Math.min(t - lastT, maxDt);
       lastT = t;
       offset -= pxPerMs * dt;
       if (offset <= -SET_WIDTH) offset += SET_WIDTH;
-      wrap.style.setProperty("--marquee-offset", offset.toFixed(3) + "px");
+      wrap.style.setProperty("--marquee-offset", Math.round(offset * 100) / 100 + "px");
       requestAnimationFrame(tick);
     }
     requestAnimationFrame(tick);
