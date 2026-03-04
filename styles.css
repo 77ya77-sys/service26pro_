@@ -1431,8 +1431,7 @@ h4 {
     flex-wrap: nowrap;
     width: max-content;
     animation: brand-marquee 28s linear infinite;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
+    will-change: transform;
   }
 
   /*
