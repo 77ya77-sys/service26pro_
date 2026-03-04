@@ -169,6 +169,11 @@ h4 {
   padding: var(--s-12) var(--s-24);
 }
 
+/* На десктопе скрыт текст кнопки для мобилы (в блоке «Неисправности») ── */
+.btn-label-mobile {
+  display: none;
+}
+
 /* ── HEADER ── */
 .header {
   position: fixed;
@@ -557,7 +562,7 @@ h4 {
 
 .adv-card p {
   font-size: var(--fs-body);
-  color: var(--c-text-secondary);
+  color: var(--c-text-body);
 }
 
 .adv-card.card-accent {
@@ -1605,26 +1610,18 @@ h4 {
     font-size: 15px;
   }
 
-  /* «Остались вопросы?» — колонка по центру на мобиле ── */
+  /* «Остались вопросы?» — на мобиле блок скрыт, подвал поднят выше ── */
   .bottom-cta-phone {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    text-align: center;
-    gap: var(--s-16);
-    width: 100%;
-    max-width: 340px;
-    margin-left: auto !important;
-    margin-right: auto !important;
+    display: none !important;
   }
 
-  .bottom-cta-phone p {
-    text-align: center;
+  /* В блоке «Неисправности» на мобиле кнопка: «Получить консультацию» ── */
+  .problems-cta .btn-label-desktop {
+    display: none;
   }
 
-  .bottom-cta-phone .btn-cta-master {
-    align-self: center;
-    width: auto;
+  .problems-cta .btn-label-mobile {
+    display: inline;
   }
 
   .faq-right .bottom-cta-to {
