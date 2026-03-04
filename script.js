@@ -147,17 +147,18 @@
     var SET_WIDTH = 14 * 96 + 13 * 28 + 28;
     var DURATION_MS = 28000;
     var pxPerMs = SET_WIDTH / DURATION_MS;
-    var maxDt = 18;
     var offset = 0;
     var lastT = null;
 
     function tick(t) {
       if (lastT === null) lastT = t;
-      var dt = Math.min(t - lastT, maxDt);
+      var dt = t - lastT;
       lastT = t;
-      offset -= pxPerMs * dt;
-      if (offset <= -SET_WIDTH) offset += SET_WIDTH;
-      wrap.style.setProperty("--marquee-offset", Math.round(offset * 100) / 100 + "px");
+      if (dt > 0 && dt < 200) {
+        offset -= pxPerMs * dt;
+        while (offset <= -SET_WIDTH) offset += SET_WIDTH;
+        wrap.style.setProperty("--marquee-offset", offset.toFixed(2) + "px");
+      }
       requestAnimationFrame(tick);
     }
     requestAnimationFrame(tick);
