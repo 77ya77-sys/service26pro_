@@ -143,6 +143,8 @@ h4 {
 }
 
 .btn {
+  position: relative;
+  overflow: hidden;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -154,6 +156,38 @@ h4 {
   border: none;
   cursor: pointer;
   white-space: nowrap;
+}
+
+.btn > *,
+.sticky-cta-btn-label {
+  position: relative;
+  z-index: 1;
+}
+
+.btn::before,
+.sticky-cta-btn::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    135deg,
+    transparent 0%,
+    transparent 42%,
+    rgba(255, 255, 255, 0.35) 50%,
+    transparent 58%,
+    transparent 100%
+  );
+  animation: btn-shine 3s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes btn-shine {
+  0%   { transform: translate(-100%, -100%); }
+  100% { transform: translate(0%, 0%); }
 }
 
 .btn-accent {
@@ -441,6 +475,8 @@ h4 {
   }
 
   .sticky-cta-btn {
+    position: relative;
+    overflow: hidden;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -456,6 +492,7 @@ h4 {
     letter-spacing: 0.02em;
     box-shadow: 0 6px 24px rgba(255, 107, 27, 0.35);
   }
+
 }
 
 .hero-trust {
