@@ -1046,8 +1046,6 @@ h4 {
   text-decoration: underline;
 }
 
-/* privacy link styles removed: footer now без ссылки на отдельную политику */
-
 .footer-col h4 {
   font-size: var(--fs-caption);
   letter-spacing: 0.14em;
@@ -1113,8 +1111,6 @@ h4 {
   flex-shrink: 0;
   max-width: 70%;
 }
-
-/* footer privacy link / cookie-banner / privacy page styles удалены */
 
 /* ── RESPONSIVE ── */
 @media (min-width: 641px) and (max-width: 960px) {
@@ -1645,6 +1641,4 @@ h4 {
     gap: var(--s-8);
     text-align: center;
   }
-
-  /* footer privacy link удалён, порядок элементов не требуется переопределять */
 }

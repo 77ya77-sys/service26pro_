@@ -71,17 +71,17 @@
 
 ```
 service26pro_/
-├── index.html              — Главная страница (~30 KB)
-├── privacy.html            — Политика конфиденциальности (заглушка)
-├── styles.css              — Все стили (~33 KB)
-├── script.js               — JS: карусели, FAQ, cookie, sticky CTA (~6.5 KB)
+├── index.html              — Главная страница
+├── styles.css              — Стили
+├── script.js               — JS: карусели этапов/отзывов, FAQ, sticky CTA
 ├── ROADMAP.md              — Этот файл
-├── .gitignore              — Git ignore
+├── .gitignore
 ├── images/
 │   ├── hero.webp           — Фото героя
 │   └── master.jpg          — Фото мастера
 └── assets/logos/
-    ├── log.webp            — Логотип компании
+    ├── log.svg             — Логотип компании (шапка, подвал)
+    ├── favicon.ico
     └── logo_brand/         — 14 логотипов брендов + yandex, avito, profi
 ```
 
@@ -118,7 +118,7 @@ service26pro_/
 - [x] CTA-тексты: action verb + value
 - [x] Тексты всех секций на русском
 - [x] Регион упомянут в hero, services, CTA, footer (SEO)
-- [ ] ⚠ Страница `privacy.html` — содержит заглушку, нужен реальный текст
+- [x] Отдельная страница политики конфиденциальности удалена по ТЗ
 
 ### Этап 4: CSS — Layout & Visual System
 **Скиллы**: designing-beautiful-websites, frontend-ui-ux-engineer
@@ -142,8 +142,7 @@ service26pro_/
 
 ### Этап 6: JavaScript (минимальный)
 - [x] FAQ-accordion: toggle на чистом JS, aria-expanded
-- [x] Cookie banner: localStorage, анимация
-- [x] Карусель отзывов: бесконечный скролл, кнопки, touch
+- [x] Карусель отзывов: скролл, кнопки, touch
 - [x] Карусель этапов: responsive переключение grid↔carousel
 - [x] Sticky CTA: IntersectionObserver
 - [x] Smooth scroll (CSS scroll-behavior)
@@ -174,7 +173,7 @@ service26pro_/
 - [ ] Заменить хардкоженные px на spacing-токены (где совпадают с --s-* шкалой)
 
 ### Контент
-- [ ] Политика конфиденциальности (`privacy.html`) — не трогать, текст предоставит клиент
+- [x] Политика конфиденциальности — отдельная страница не используется по ТЗ
 
 ### SEO / Техническое
 - [ ] Добавить favicon (`<link rel="icon">`)
@@ -251,5 +250,5 @@ service26pro_/
 - [x] OG-теги для шаринга
 - [ ] robots.txt — НЕТ
 - [ ] sitemap.xml — НЕТ
-- [ ] Политика конфиденциальности — текст предоставит клиент (не трогать)
-- [x] ✅ Рефакторинг: мертвый CSS/HTML/JS код удалён (04.03.2026)
+- [x] Политика конфиденциальности — отдельная страница не используется
+- [x] ✅ Рефакторинг: мёртвый код и файлы удалены (04.03.2026)
