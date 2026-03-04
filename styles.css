@@ -589,28 +589,34 @@ h4 {
 .brand-logos-wrap {
   margin-top: var(--s-48);
   width: 100%;
-  position: relative;
 }
 
-.brand-logos {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: var(--s-24);
-  align-items: center;
-}
-
-.brand-logos-group {
+/* Десктоп: первый набор — статичная flex-сетка по центру; клон скрыт */
+.brand-marquee-track {
   display: contents;
 }
 
-.brand-logos-clone {
+/* Цветное окно скрыто на десктопе */
+.brand-marquee-color {
+  display: none;
+}
+
+.brand-logo-set {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: var(--s-20);
+}
+
+.brand-logo-set + .brand-logo-set {
   display: none;
 }
 
 .brand-logo {
   height: 35px;
   width: auto;
+  flex-shrink: 0;
   object-fit: contain;
   filter: grayscale(100%);
   opacity: 0.5;
@@ -1407,98 +1413,91 @@ h4 {
     justify-items: stretch;
   }
 
-  /* Логотипы брендов: бесконечная бегущая строка с цветным центром ── */
+  /* Логотипы брендов: бесконечная бегущая строка ── */
   .brand-logos-wrap {
     margin-top: var(--s-32);
     margin-left: calc(-1 * var(--page-padding-x));
     margin-right: calc(-1 * var(--page-padding-x));
+    overflow: hidden;
     position: relative;
-    overflow: hidden;
-  }
-
-  /* Серый (базовый) слой — затухает по краям */
-  .marquee-track-container {
-    overflow: hidden;
-    mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
+    /* Fade-out по краям: применяется ко всему слою, включая цветной трек */
     -webkit-mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
   }
 
-  /* Цветной слой — абсолютно поверх серого, виден только по центру */
-  .marquee-colored-container {
-    display: block !important;
-    position: absolute !important;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: auto;
-    pointer-events: none;
-    z-index: 2;
-    overflow: hidden;
-    /* Маска: цветная полоса по ширине надписи «126+ брендов» ± 30px → 21%–79% */
-    mask-image: linear-gradient(to right, transparent 16%, black 21%, black 79%, transparent 84%);
-    -webkit-mask-image: linear-gradient(to right, transparent 16%, black 21%, black 79%, transparent 84%);
-  }
-
-  .marquee-colored-container .brand-logo {
-    filter: grayscale(0) !important;
-    opacity: 1 !important;
-  }
-
-  .brand-logos {
-    display: flex !important;
-    justify-content: flex-start;
-    flex-wrap: nowrap;
-    gap: 0;
-    align-items: center;
-    width: max-content;
-    padding: 0;
-    margin: 0;
-  }
-
-  .brand-logos-group {
+  /*
+    Оба трека (серый + цветной) используют одинаковую анимацию → идеальный sync.
+    Трек содержит 2 набора; translateX(-50%) = ровно один набор = бесшовный цикл.
+  */
+  .brand-marquee-track {
     display: flex;
-    align-items: center;
-    gap: var(--s-20);
-    padding-right: var(--s-20);
-    flex-shrink: 0;
-    animation: marquee 25s linear infinite;
-    will-change: transform;
-    transform: translateZ(0);
+    flex-wrap: nowrap;
+    width: max-content;
+    animation: brand-marquee 28s linear infinite;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
   }
 
-  /* Клоны: для бесконечного скролла и цветного слоя */
-  .brand-logos-clone {
-    display: flex !important;
+  /*
+    Цветное окно: position absolute + left:0 + right:0 → ширина = ширина экрана.
+    Именно поэтому calc(50% - 95px) = 50% ЭКРАНА минус 95px — правильно!
+    overflow:hidden обрезает анимированный внутренний трек до ширины экрана.
+    Маска: ширина подписи «…и ещё 126+ брендов» (~150px) + 20px с каждой стороны → ±95px от центра.
+  */
+  .brand-marquee-color {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+    pointer-events: none;
+    -webkit-mask-image: linear-gradient(to right,
+      transparent  calc(50% - 125px),
+      black        calc(50% - 110px),
+      black        calc(50% + 110px),
+      transparent  calc(50% + 125px)
+    );
+    mask-image: linear-gradient(to right,
+      transparent  calc(50% - 125px),
+      black        calc(50% - 110px),
+      black        calc(50% + 110px),
+      transparent  calc(50% + 125px)
+    );
   }
 
-  /* Цветной контейнер — не flex, а block + absolute */
-  .marquee-colored-container.brand-logos-clone {
-    display: block !important;
+  /* Логотипы внутри цветного окна — полный цвет */
+  .brand-marquee-color .brand-logo {
+    filter: none !important;
+    opacity: 1 !important;
   }
 
-  .brand-logo {
+  .brand-logo-set {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 28px;
+    padding-right: 28px;
     flex-shrink: 0;
+  }
+
+  /* Показываем клоны на мобиле */
+  .brand-logo-set + .brand-logo-set {
+    display: flex;
   }
 
   .brand-logos-caption {
     position: relative;
-    z-index: 3;
-    margin-top: var(--s-16);
+    z-index: 1;
+    margin-top: var(--s-12);
     padding-left: var(--page-padding-x);
     padding-right: var(--page-padding-x);
     text-align: center;
   }
 
-  @keyframes marquee {
-    from {
-      transform: translate3d(0, 0, 0);
-    }
-
-    to {
-      transform: translate3d(-100%, 0, 0);
-    }
+  @keyframes brand-marquee {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
   }
 
   /* FAQ: блок аккордеона и карточка ТО строго по центру на мобиле ── */
