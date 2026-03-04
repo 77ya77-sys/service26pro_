@@ -80,7 +80,6 @@
       sync();
       if (stepsGrid && isMobile()) stepsGrid.scrollLeft = 0;
     });
-    document.addEventListener("DOMContentLoaded", sync);
   })();
 
   var heroCta = document.getElementById("hero-cta");
