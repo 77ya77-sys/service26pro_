@@ -776,6 +776,7 @@ h4 {
   font-weight: 700;
   font-size: 1rem;
   flex-shrink: 0;
+  object-fit: cover;
 }
 
 .review-name {
@@ -1127,6 +1128,7 @@ h4 {
 
   .adv-grid {
     grid-template-columns: 1fr;
+    grid-auto-rows: 1fr;
   }
 
   .step-card {
