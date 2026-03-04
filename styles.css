@@ -1433,12 +1433,14 @@ h4 {
     position: relative;
   }
 
-  /* Плавное движение без микрорывков: анимация на композиторе, фиксированный пиксель 1736 = один набор */
+  /* Плавное движение: анимация на композиторе; backface + целые пиксели снижают мерцание на стыке цикла на iOS */
   .brand-marquee-track {
     display: flex;
     flex-wrap: nowrap;
     width: max-content;
     will-change: transform;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
     animation: brand-marquee 28s linear infinite;
   }
 
