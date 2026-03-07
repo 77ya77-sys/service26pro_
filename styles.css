@@ -815,18 +815,21 @@ h4 {
 }
 
 .review-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: var(--r-full);
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  min-height: 48px;
+  border-radius: 50%;
   background: #e5e7eb;
   color: #4b5563;
-  display: grid;
-  place-items: center;
+  display: block;
   font-family: var(--ff-display);
   font-weight: 700;
   font-size: 1rem;
   flex-shrink: 0;
   object-fit: cover;
+  object-position: center;
+  aspect-ratio: 1 / 1;
 }
 
 .review-name {
