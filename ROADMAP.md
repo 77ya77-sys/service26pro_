@@ -73,16 +73,17 @@
 service26pro_/
 ├── index.html              — Главная страница
 ├── styles.css              — Стили
-├── script.js               — JS: карусели этапов/отзывов, FAQ, sticky CTA
+├── script.js               — JS: карусели этапов/отзывов, FAQ, sticky CTA, marquee брендов (rAF)
 ├── ROADMAP.md              — Этот файл
 ├── .gitignore
 ├── images/
-│   ├── hero.webp           — Фото героя
-│   └── master.jpg          — Фото мастера
-└── assets/logos/
-    ├── log.svg             — Логотип компании (шапка, подвал)
-    ├── favicon.ico
-    └── logo_brand/         — 14 логотипов брендов + yandex, avito, profi
+│   └── hero.webp           — Фото героя
+└── assets/
+    ├── logos/
+    │   ├── log.svg         — Логотип компании (шапка, подвал)
+    │   ├── favicon.ico
+    │   └── logo_brand/     — 14 логотипов брендов (1–14.webp) + yandex.webp, avito.webp
+    └── avatars/            — Локальные аватарки (не используются, в отзывах — Pexels CDN)
 ```
 
 ## Пошаговый план реализации
